@@ -1,0 +1,43 @@
+services:
+  # Service 1: Train the model
+  model-training:
+    build:
+      context: .
+      dockerfile: Dockerfile.training
+    container_name: penguin_trainer
+    volumes:
+      - model_volume:/exchange
+    command: >
+      sh -c "python src/model_training.py &&
+             cp penguin_model.pkl /exchange/penguin_model.pkl"
+
+  # Service 2: Flask API
+  flask-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: penguin_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - model_volume:/exchange
+    depends_on:
+      model-training:
+        condition: service_completed_successfully
+    command: >
+      sh -c "cp /exchange/penguin_model.pkl ./penguin_model.pkl &&
+             python src/main.py"
+
+  # Service 3: Streamlit Frontend
+  streamlit-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    container_name: penguin_frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - flask-api
+
+volumes:
+  model_volume:
