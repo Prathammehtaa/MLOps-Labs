@@ -6,6 +6,12 @@ from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
+import os
+
+# Auto-create temp directory if it doesn't exist
+TEMP_DIR = '/opt/airflow/dags/temp/'
+os.makedirs(TEMP_DIR, exist_ok=True)
+
 # File paths
 DATA_PATH = '/opt/airflow/dags/data/work_from_home_burnout_dataset.csv'
 TEMP_DIR = '/opt/airflow/dags/temp/'
