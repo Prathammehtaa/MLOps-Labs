@@ -11,7 +11,7 @@ pip install mlflow scikit-learn pandas seaborn matplotlib
 ```
 
 ### Dataset
-Download `train.csv` from [Kaggle Bank Churn Competition](https://www.kaggle.com/competitions/playground-series-s4e1) and place it in the `data/` folder.
+The dataset `train.csv` is included in the `data/` folder. It is from the [Kaggle Bank Churn Competition](https://www.kaggle.com/competitions/playground-series-s4e1).
 
 ## Running the Lab
 
